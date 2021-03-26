@@ -8,6 +8,15 @@ from eralchemy import render_er
 
 Base = declarative_base()
 
+
+class Favorites(Base):
+    __tablename__ = 'favorites'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = Column(Integer, primary_key=True)
+    users_id = Column(Integer, ForeignKey('users.id'))
+    name= Column (String(250))
+
 class Users(Base):
     __tablename__ = 'users'
     # Here we define columns for the table person
@@ -16,16 +25,9 @@ class Users(Base):
     name = Column(String(250), nullable=False)
     email = Column(String(250))
     password = Column(String(10))
+    favorites= relationship(Favorites)
 
-class Favorites(Base):
-    __tablename__ = 'favorites'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
-    id = Column(Integer, primary_key=True)
-    users_id = Column(Integer, ForeignKey('users.id'))
-    characters_id = Column(Integer, ForeignKey('characters.id'))
-    planets_id = Column(Integer, ForeignKey('planets.id'))
-    starships_id = Column(Integer, ForeignKey('starships.id'))
+    
     
 class Characters(Base):
     __tablename__ = 'characters'
@@ -37,10 +39,7 @@ class Characters(Base):
     gravity= Column(String(30))
     climate= Column(String(250))
     population= Column(Integer)
-    planets_id = Column(Integer, ForeignKey('planets.id'))
-    starships_id = Column(Integer, ForeignKey('starships.id'))
-   
-
+    
 class Planets(Base):
     __tablename__ = 'planets'
     # Here we define columns for the table address.
